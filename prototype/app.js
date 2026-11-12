@@ -1072,7 +1072,7 @@ function a4HTML(m, rows) {
 function printArea(html, mode) {
   const cls = mode === 'receipt' ? 'print-receipt' + (String(db.config.printer) === '58' ? ' w58' : '') : 'print-a4';
   const w = String(db.config.printer) === '58' ? '58mm' : '80mm';
-  const pageCss = mode === 'receipt' ? '@page{size:' + w + ' auto;margin:3mm}' : '@page{size:A4;margin:12mm}';
+  const pageCss = mode === 'receipt' ? '@page{size:' + w + ' 297mm;margin:3mm}' : '@page{size:A4;margin:12mm}';
   let st = document.querySelector('#print-size');
   if (!st) { st = document.createElement('style'); st.id = 'print-size'; (document.head || document.body).appendChild(st); }
   st.textContent = pageCss;
