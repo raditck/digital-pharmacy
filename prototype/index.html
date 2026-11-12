@@ -129,6 +129,18 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
 .receipt table{width:100%;border-collapse:collapse}
 .receipt td{padding:1px 0;vertical-align:top}
 .receipt .r{text-align:right}
+.login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d9488,#0f766e);z-index:100;padding:16px}
+.login.hidden{display:none!important}
+.login-card{width:340px;max-width:100%;padding:26px;border-radius:14px;text-align:center}
+.login-card .brand-mark{margin:0 auto 12px}
+.login-card h2{font-size:18px}
+.login-card .sub{color:var(--muted);font-size:12px;margin:4px 0 6px}
+.login-card label{display:block;text-align:left;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:10px 0 4px}
+.login-card .input{width:100%}
+.login-card .btn{width:100%;justify-content:center;margin-top:16px}
+.login-err{color:var(--danger);font-size:12px;margin-top:10px}
+.login-hint{margin-top:12px;font-size:12px;color:var(--muted)}
+.login-lang{background:none;border:0;color:var(--primary-dark);cursor:pointer;font-size:12px;margin-top:10px}
 #print-area{display:none}
 #print-area.measuring{display:block!important;position:absolute;left:-10000px;top:0;visibility:hidden}
 @page{size:A4;margin:12mm}
@@ -166,7 +178,22 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
 </style>
 </head>
 <body>
-<div class="app">
+<div class="login" id="login">
+  <div class="login-card card">
+    <div class="brand-mark">A</div>
+    <h2 id="login-title">Farmasi Digital</h2>
+    <div class="sub" id="login-sub"></div>
+    <label id="login-user-label" for="login-user">Username</label>
+    <input class="input" id="login-user" autocomplete="username" value="test">
+    <label id="login-pass-label" for="login-pass">Password</label>
+    <input class="input" id="login-pass" type="password" autocomplete="current-password" value="test">
+    <div class="login-err hidden" id="login-err"></div>
+    <button class="btn btn-primary" id="login-btn"></button>
+    <div class="login-hint" id="login-hint"></div>
+    <button class="login-lang" id="login-lang" type="button"></button>
+  </div>
+</div>
+<div class="app hidden" id="app">
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-mark">A</div>
@@ -184,6 +211,7 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
       <div class="spacer"></div>
       <button class="btn" id="lang-toggle" title="Ganti bahasa / Change language"></button>
       <button class="btn" id="print-page" title="Print"></button>
+      <button class="btn" id="logout" title="Logout"></button>
     </header>
     <main class="view" id="view"></main>
   </div>

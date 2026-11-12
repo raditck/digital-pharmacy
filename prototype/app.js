@@ -29,7 +29,11 @@ const UI = {
   noStock:{en:'Out of stock',id:'Stok habis'}, dateFrom:{en:'From',id:'Dari'}, dateTo:{en:'To',id:'Sampai'},
   apply:{en:'Apply',id:'Terapkan'}, footer:{en:'Thank you',id:'Terima kasih'},
   language:{en:'Language',id:'Bahasa'}, sum:{en:'Total',id:'Jumlah'}, reset:{en:'Reset data',id:'Reset data'},
-  resetQ:{en:'Reset all data back to samples?',id:'Kembalikan semua data ke contoh?'}, saved:{en:'Saved',id:'Tersimpan'}
+  resetQ:{en:'Reset all data back to samples?',id:'Kembalikan semua data ke contoh?'}, saved:{en:'Saved',id:'Tersimpan'},
+  login:{en:'Sign in',id:'Masuk'}, logout:{en:'Logout',id:'Keluar'},
+  loginSub:{en:'Sign in to try the prototype',id:'Masuk untuk mencoba prototype'},
+  loginErr:{en:'Wrong username or password',id:'Username atau password salah'},
+  loginHint:{en:'Demo account: test / test',id:'Akun demo: test / test'}
 };
 const tr = (k) => L(UI[k]) || k;
 
@@ -1155,6 +1159,7 @@ function renderTopbar() {
   const m = MENUS[current];
   $('#page-title').innerHTML = icon(m.icon, 18) + '<span>' + esc(L(m.title)) + '</span>';
   $('#print-page').innerHTML = icon('printer') + esc(tr('print'));
+  const lo = $('#logout'); if (lo) lo.textContent = tr('logout');
   $('#lang-toggle').textContent = lang === 'id' ? 'EN' : 'ID';
   $('#brand-sub').textContent = lang === 'id' ? 'Prototype POS' : 'POS Prototype';
   $('#sidebar-foot').textContent = L(db.profile.nama) + ' v1.0';
@@ -1232,6 +1237,24 @@ function onInput(e) {
 function onChange(e) {
   if (e.target.dataset.disc != null) { const i = Number(e.target.dataset.disc); cart[i].disc = Number(e.target.value) || 0; rerender(); }
 }
+function renderLogin() {
+  $('#login-title').textContent = 'Farmasi Digital';
+  $('#login-sub').textContent = L(UI.loginSub);
+  $('#login-user-label').textContent = 'Username';
+  $('#login-pass-label').textContent = 'Password';
+  $('#login-btn').textContent = tr('login');
+  $('#login-err').textContent = L(UI.loginErr);
+  $('#login-hint').textContent = L(UI.loginHint);
+  $('#login-lang').textContent = lang === 'id' ? 'English' : 'Indonesia';
+}
+function showApp() { $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); render(); }
+function showLogin() { $('#login').classList.remove('hidden'); $('#app').classList.add('hidden'); renderLogin(); }
+function tryLogin() {
+  const u = ($('#login-user').value || '').trim();
+  const pw = $('#login-pass').value || '';
+  if (u === 'test' && pw === 'test') { localStorage.setItem('pharmacy:auth', '1'); $('#login-err').classList.add('hidden'); showApp(); }
+  else { $('#login-err').classList.remove('hidden'); }
+}
 function init() {
   document.addEventListener('click', onClick);
   document.addEventListener('input', onInput);
@@ -1240,11 +1263,15 @@ function init() {
   $('#lang-toggle').addEventListener('click', () => { lang = lang === 'id' ? 'en' : 'id'; localStorage.setItem('pharmacy:lang', lang); render(); });
   $('#print-page').addEventListener('click', printCurrent);
   $('#overlay').addEventListener('click', (e) => { if (e.target.id === 'overlay') closeModal(); });
+  $('#login-btn').addEventListener('click', tryLogin);
+  $('#login-pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); });
+  $('#login-lang').addEventListener('click', () => { lang = lang === 'id' ? 'en' : 'id'; localStorage.setItem('pharmacy:lang', lang); renderLogin(); });
+  $('#logout').addEventListener('click', () => { localStorage.removeItem('pharmacy:auth'); location.reload(); });
   const p = new URLSearchParams(location.hash.replace('#', '?'));
   if (p.get('menu') && MENUS[p.get('menu')]) current = p.get('menu');
-  render();
+  if (localStorage.getItem('pharmacy:auth') === '1') showApp(); else showLogin();
 }
 boot();
 init();
-window.Pharmacy = { db: db, store: store, go: go, MENUS: MENUS, reset: resetData, openForm: openForm, printCurrent: printCurrent, GROUPS: GROUPS, addToCart: addToCart, pay: pay, receiptHTML: receiptHTML, setLang: (x) => { lang = x; render(); }, onClick: onClick };
+window.Pharmacy = { db: db, store: store, go: go, MENUS: MENUS, reset: resetData, openForm: openForm, printCurrent: printCurrent, GROUPS: GROUPS, addToCart: addToCart, pay: pay, receiptHTML: receiptHTML, setLang: (x) => { lang = x; render(); }, onClick: onClick, login: tryLogin };
 })();

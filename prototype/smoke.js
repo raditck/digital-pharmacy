@@ -75,3 +75,14 @@ P.onClick({ target: btn });
 const ov = document.querySelector('#overlay').innerHTML;
 if (!ov || ov.indexOf('form-grid') < 0) throw new Error('New button did not open the form');
 console.log('NEW-BUTTON OK (form fields rendered)');
+
+/* login gate: bad creds rejected, test/test accepted */
+document.querySelector('#login-user').value = 'nope';
+document.querySelector('#login-pass').value = 'nope';
+P.login();
+if (store['pharmacy:auth']) throw new Error('login accepted bad credentials');
+document.querySelector('#login-user').value = 'test';
+document.querySelector('#login-pass').value = 'test';
+P.login();
+if (store['pharmacy:auth'] !== '1') throw new Error('login rejected test/test');
+console.log('LOGIN OK (test/test)');
