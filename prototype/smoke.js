@@ -12,7 +12,9 @@ function El() {
 }
 const els = {};
 const document = {
+  head: El(), body: El(),
   querySelector(s) { return els[s] || (els[s] = El()); },
+  getElementById(id) { return els['#' + id] || (els['#' + id] = El()); },
   querySelectorAll() { return []; },
   addEventListener() {}, createElement() { return El(); }
 };
