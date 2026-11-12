@@ -1,0 +1,5 @@
+node_modules/
+*.log
+smoke.out
+.DS_Store
+Thumbs.db
