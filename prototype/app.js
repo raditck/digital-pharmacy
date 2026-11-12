@@ -1072,11 +1072,22 @@ function a4HTML(m, rows) {
 function printArea(html, mode) {
   const cls = mode === 'receipt' ? 'print-receipt' + (String(db.config.printer) === '58' ? ' w58' : '') : 'print-a4';
   const w = String(db.config.printer) === '58' ? '58mm' : '80mm';
-  const pageCss = mode === 'receipt' ? '@page{size:' + w + ' 297mm;margin:3mm}' : '@page{size:A4;margin:12mm}';
+  const area = $('#print-area');
+  area.classList.add('measuring');
+  area.innerHTML = '<div class="' + cls + '">' + html + '</div>';
+  let pageCss;
+  if (mode === 'receipt') {
+    const box = area.firstElementChild;
+    const px = box ? (box.offsetHeight || box.scrollHeight || 0) : 0;
+    area.classList.remove('measuring');
+    const hmm = px > 0 ? Math.ceil(px * 25.4 / 96) + 8 : 297;
+    pageCss = '@page{size:' + w + ' ' + hmm + 'mm;margin:3mm}';
+  } else {
+    pageCss = '@page{size:A4;margin:12mm}';
+  }
   let st = document.querySelector('#print-size');
   if (!st) { st = document.createElement('style'); st.id = 'print-size'; (document.head || document.body).appendChild(st); }
   st.textContent = pageCss;
-  $('#print-area').innerHTML = '<div class="' + cls + '">' + html + '</div>';
   window.print();
   setTimeout(() => { $('#print-area').innerHTML = ''; }, 800);
 }
