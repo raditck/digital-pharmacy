@@ -67,3 +67,11 @@ if (stockAfter !== stockBefore - 1) throw new Error('stock not decremented');
 console.log('TRANSACTION OK');
 if (P.db.profile.nama !== 'Farmasi Digital') throw new Error('profile rename migration failed: ' + P.db.profile.nama);
 console.log('RENAME OK -> ' + P.db.profile.nama + ' v1.0');
+
+/* click test: the no-value data-new attribute must open the form modal */
+P.go('products');
+const btn = { dataset: { new: '' }, closest() { return btn; } };
+P.onClick({ target: btn });
+const ov = document.querySelector('#overlay').innerHTML;
+if (!ov || ov.indexOf('form-grid') < 0) throw new Error('New button did not open the form');
+console.log('NEW-BUTTON OK (form fields rendered)');

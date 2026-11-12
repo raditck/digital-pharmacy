@@ -1199,7 +1199,7 @@ function onClick(e) {
   if (!el) return;
   const d = el.dataset;
   if (d.nav) return go(d.nav);
-  if (d.new) return openForm(MENUS[current], null);
+  if (d.new !== undefined) return openForm(MENUS[current], null);
   if (d.edit) { const r = findRow(d.edit); if (r) { MENUS[current].__editing = r.id; openForm(MENUS[current], r); } return; }
   if (d.del) {
     if (!confirm(tr('delQ'))) return;
@@ -1246,5 +1246,5 @@ function init() {
 }
 boot();
 init();
-window.Pharmacy = { db: db, store: store, go: go, MENUS: MENUS, reset: resetData, openForm: openForm, printCurrent: printCurrent, GROUPS: GROUPS, addToCart: addToCart, pay: pay, receiptHTML: receiptHTML, setLang: (x) => { lang = x; render(); } };
+window.Pharmacy = { db: db, store: store, go: go, MENUS: MENUS, reset: resetData, openForm: openForm, printCurrent: printCurrent, GROUPS: GROUPS, addToCart: addToCart, pay: pay, receiptHTML: receiptHTML, setLang: (x) => { lang = x; render(); }, onClick: onClick };
 })();
