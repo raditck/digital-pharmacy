@@ -1079,12 +1079,12 @@ function printArea(html, mode) {
   if (mode === 'receipt') {
     const box = area.firstElementChild;
     const px = box ? (box.offsetHeight || box.scrollHeight || 0) : 0;
-    area.classList.remove('measuring');
     const hmm = px > 0 ? Math.ceil(px * 25.4 / 96) + 8 : 297;
     pageCss = '@page{size:' + w + ' ' + hmm + 'mm;margin:3mm}';
   } else {
     pageCss = '@page{size:A4;margin:12mm}';
   }
+  area.classList.remove('measuring');
   let st = document.querySelector('#print-size');
   if (!st) { st = document.createElement('style'); st.id = 'print-size'; (document.head || document.body).appendChild(st); }
   st.textContent = pageCss;

@@ -42,6 +42,10 @@ P.GROUPS.forEach((g) => g.items.forEach((id) => {
   const m = P.MENUS[id];
   if (m.type === 'crud') { P.openForm(m, null); forms++; const row = P.db[m.key][0]; if (row) { P.openForm(m, row); forms++; } }
   P.printCurrent(); prints++;
+  if (m.type !== 'pos') {
+    const out = document.querySelector('#print-area').innerHTML;
+    if (!out || out.length < 50) throw new Error('empty printout for menu: ' + id);
+  }
 }));
 console.log('OK pages=' + pages + ' forms=' + forms + ' prints=' + prints);
 console.log('products=' + P.db.products.length + ' sales=' + P.db.sales.length + ' salesMenu=' + P.db.sales.length);
