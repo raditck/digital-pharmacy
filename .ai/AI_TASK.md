@@ -59,6 +59,8 @@ all UI and fields and menus all here https://blog.apotekdigital.com/panduan/mena
 - 36 pages across 9 groups: Dashboard, Kasir, 5 sales, 4 service, 7 inventory, 4 purchase, 4 contacts, 3 promo, 3 reports, 4 settings. Each CRUD page: own field set, own description, own icon, search/New/Edit/Delete/Print. Derived pages (Defecta, Stok Kadaluarsa, Cetak Barcode) and report pages read live stores. Profile/Config are single-record forms.
 - Kasir: product grid + cart, live totals (subtotal/disc/PPN), payment picker, cash input, change calc; Pay writes sale to Daftar Penjualan + decrements product stock, then opens receipt modal with proper Print + Tutup footer buttons.
 - i18n EN/ID toggle in topbar persists in localStorage; dashboard stat labels bilingual.
+- Prototype moved to `prototype/` (`index.html`, `app.js`, `smoke.js`); rules file paths updated; smoke resolves `__dirname`.
+- GitHub: repo `https://github.com/raditck/digital-pharmacy` (public, branch `main`) created and pushed via cached PAT.
 - Verification harness `smoke.js` (Node DOM shim) renders all 36 pages in both languages, 51 form opens, 36 print layouts, and runs one add-to-cart -> pay transaction (asserts sale recorded + stock decremented).
 
 # Verification
