@@ -29,6 +29,20 @@ shown as a prototype."
   diskon, total, metode, bayar, kembali, kasir
 - Other menus: exactly the fields declared in that menu's config in `prototype/app.js`.
 
+## Deploy (Tantua Deploy Bridge — static files only)
+
+```
+BRIDGE_URL  = https://deployment.tantua.com
+PROJECT_ID  = digital-pharmacy
+DEPLOY_ROOT = /home/ratumara/farmasi.tantua.com   (docroot = public/)
+LIVE        = https://farmasi.tantua.com/
+SECRET      = owner-held (see AI_DEPLOYMENT_GUIDE.md; never commit)
+```
+
+- Upload with `PUT /api/v1/files`, `path=public/<file>`, `content_base64`, token per guide. No full-site zip swap needed (static).
+- `index.html` is served DYNAMIC (not cached); `app.js` is Cloudflare-cached (`max-age=14400`). Bump the `?v=` query on the script tag in `index.html` on every `app.js` change, else the edge serves the old build.
+- Secret is never written to the repo.
+
 ## Future Rules
 
 Append new rules below as sections; do not rewrite history.
