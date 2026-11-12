@@ -32,8 +32,7 @@ const UI = {
   resetQ:{en:'Reset all data back to samples?',id:'Kembalikan semua data ke contoh?'}, saved:{en:'Saved',id:'Tersimpan'},
   login:{en:'Sign in',id:'Masuk'}, logout:{en:'Logout',id:'Keluar'},
   loginSub:{en:'Sign in to try the prototype',id:'Masuk untuk mencoba prototype'},
-  loginErr:{en:'Wrong username or password',id:'Username atau password salah'},
-  loginHint:{en:'Demo account: test / test',id:'Akun demo: test / test'}
+  loginErr:{en:'Wrong username or password',id:'Username atau password salah'}
 };
 const tr = (k) => L(UI[k]) || k;
 
@@ -1244,7 +1243,6 @@ function renderLogin() {
   $('#login-pass-label').textContent = 'Password';
   $('#login-btn').textContent = tr('login');
   $('#login-err').textContent = L(UI.loginErr);
-  $('#login-hint').textContent = L(UI.loginHint);
   $('#login-lang').textContent = lang === 'id' ? 'English' : 'Indonesia';
 }
 function showApp() { $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); render(); }
