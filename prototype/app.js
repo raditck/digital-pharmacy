@@ -14,6 +14,7 @@ const fmtDate = (v) => (v ? String(v).slice(0, 10).split('-').reverse().join('/'
 const uid = () => Math.random().toString(36).slice(2, 9);
 const daysLeft = (d) => Math.round((new Date(d) - new Date(today())) / 86400000);
 
+const BUILD = 'v1.1';
 let lang = localStorage.getItem('pharmacy:lang') || 'id';
 const L = (x) => (x && typeof x === 'object' ? (x[lang] != null ? x[lang] : x.en) : x == null ? '' : String(x));
 const UI = {
@@ -1161,7 +1162,7 @@ function renderTopbar() {
   const lo = $('#logout'); if (lo) lo.textContent = tr('logout');
   $('#lang-toggle').textContent = lang === 'id' ? 'EN' : 'ID';
   $('#brand-sub').textContent = lang === 'id' ? 'Prototype POS' : 'POS Prototype';
-  $('#sidebar-foot').textContent = L(db.profile.nama) + ' v1.0';
+  $('#sidebar-foot').textContent = L(db.profile.nama) + ' ' + BUILD;
 }
 function renderNav() {
   $('#nav').innerHTML = GROUPS.map((g) => '<div class="nav-group"><div class="nav-group-title">' + esc(L(g.label)) + '</div>' +
@@ -1269,6 +1270,7 @@ function init() {
   if (p.get('menu') && MENUS[p.get('menu')]) current = p.get('menu');
   if (localStorage.getItem('pharmacy:auth') === '1') showApp(); else showLogin();
 }
+console.log('Farmasi Digital ' + BUILD);
 boot();
 init();
 window.Pharmacy = { db: db, store: store, go: go, MENUS: MENUS, reset: resetData, openForm: openForm, printCurrent: printCurrent, GROUPS: GROUPS, addToCart: addToCart, pay: pay, receiptHTML: receiptHTML, setLang: (x) => { lang = x; render(); }, onClick: onClick, login: tryLogin };
