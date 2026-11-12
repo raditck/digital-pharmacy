@@ -144,8 +144,9 @@ table.tbl{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
   .print-a4 th,.print-a4 td{border:1px solid #999;padding:4px 6px;font-size:11px;text-align:left}
   .print-a4 td.num{text-align:right}
   .print-a4 .sig{display:flex;justify-content:space-between;margin-top:36px;font-size:11px}
-  .print-receipt{page:receipt;width:auto;font:12px/1.4 "Courier New",monospace;color:#000}
-  .print-receipt.w58{page:receipt58;font-size:11px}
+  .print-receipt{page:receipt;width:100%;max-width:80mm;margin:0 auto;font:12px/1.4 "Courier New",monospace;color:#000;background:#fff}
+  .print-receipt.w58{page:receipt58;max-width:58mm;font-size:11px}
+  .print-receipt table{page-break-inside:avoid}
   .print-receipt h4{text-align:center;font-size:14px;margin-bottom:2px}
   .print-receipt .center{text-align:center}
   .print-receipt hr{border:0;border-top:1px dashed #000;margin:6px 0}
